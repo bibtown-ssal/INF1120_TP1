@@ -187,15 +187,15 @@ public class GestionCodesProduits
                     //validation que la Categorie est possible
                     if(numCategorie >= 1 && numCategorie <= NB_CATEGORIE){
                         //retire le numero de categorie du code
-                        codeProduit = codeProduit % (int)Math.pow(10,nbChiffre);
+                        codeProduit = codeProduit%(int)Math.pow(10,nbChiffre);
                         //isole le numero de produit
-                        numProduit = codeProduit/(int)(Math.pow(10,nbChiffre-1));
+                        numProduit=codeProduit/(int)(Math.pow(10,nbChiffre-1));
                         //retire le numero de produit du code
-                        codeProduit = codeProduit % (int)Math.pow(10,nbChiffre-1);
+                        codeProduit=codeProduit%(int)Math.pow(10,nbChiffre-1);
                         if(numCategorie == CATEGORIE_ORDINATEUR){
                             descrProduit += CATEGORIE + "Ordinateurs"
                                     + PRODUIT;
-                            switch(numProduit){
+                            switch(numProduit){ //selection du bon produit
                                 case(1): descrProduit += "Ordinateur de bureau";
                                     break;
                                 case(2): descrProduit += "Portable";
@@ -204,7 +204,8 @@ public class GestionCodesProduits
                                     break;
                                 case(4): descrProduit += "Moniteur";
                                     break;
-                                case(5): descrProduit += "Imprimante / numeriseur";
+                                case(5): descrProduit 
+                                        += "Imprimante / numeriseur";
                                     break;
                                 default: codeValide = false;
                             }
@@ -212,7 +213,7 @@ public class GestionCodesProduits
                             descrProduit += CATEGORIE + "Televiseurs"
                                     + PRODUIT;
                             switch(numProduit){
-                                case(1): descrProduit += "Televiseur de bureau";
+                                case(1): descrProduit += "Televiseur";
                                     break;
                                 case(2): descrProduit += "Projecteur";
                                     break;
@@ -240,31 +241,32 @@ public class GestionCodesProduits
                                     break;
                                 case(5): descrProduit += "Firteuse / grill";
                                     break;
-                                case(6): descrProduit += "Grille-pain / four grille-pain";
+                                case(6): descrProduit 
+                                        += "Grille-pain / four grille-pain";
                                     break;
                                 default: codeValide = false;
                             }
                         }
-                        
-                        if(codeValide){
+                        //affichage des informations sur le produit
+                        if(codeValide){ 
                             descrProduit += MODELE + codeProduit;
                             System.out.println(descrProduit);
-                            System.out.println(AFFICHAGE_CODE_PRODUIT + numCategorie 
-                                    + numProduit + codeProduit);
+                            System.out.println(AFFICHAGE_CODE_PRODUIT 
+                                    + numCategorie + numProduit + codeProduit);
                             System.out.print(MESS_CONTINUER);
                             Clavier.lireFinLigne();
-                        }else {
-                            System.out.println(MESS_ERR_CODE_INVALIDE + 1);
+                        }else { //code non valide (produit)
+                            System.out.println(MESS_ERR_CODE_INVALIDE);
                             System.out.print(MESS_CONTINUER);
                             Clavier.lireFinLigne();
                         }
-                    }else{
+                    }else{ //code non valide (categorie)
                         System.out.println(MESS_ERR_CODE_INVALIDE + 2);
                         System.out.print(MESS_CONTINUER);
                         Clavier.lireFinLigne();
                     }
 
-                }else {
+                }else { //code non valide (code n'est pas dans le limites possibles)
                     System.out.println(MESS_ERR_CODE_INVALIDE + 3);
                     System.out.print(MESS_CONTINUER);
                     Clavier.lireFinLigne();
