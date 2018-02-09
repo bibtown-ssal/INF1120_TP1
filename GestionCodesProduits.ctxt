@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=GestionCodesProduits
-comment0.text=\n\ GestionCodesProduits\ est\ une\ classe\ qui\ permet\ de\ construire\ un\n\ code\ de\ produit\ et/ou\ d'afficher\ les\ informations\ d'un\ produit\ a\ \n\ partir\ de\ son\ code.\n\n\ @author\ Charles\ Therien\n\ @codePermanent\ THEC03029208\n\ @version\ 22\ fev\ 2018\n
+comment0.text=\n\ GestionCodesProduits\ est\ une\ classe\ qui\ permet\ de\ construire\ un\n\ code\ de\ produit\ et/ou\ d'afficher\ les\ informations\ d'un\ produit\ a\ \n\ partir\ de\ son\ code.\n\n\ @author\ Charles\ Therien\n\ Code\ Permanent\ THEC03029208\n\ Courriel\ \:\ therien.charles@courrier.uqam.ca\n\ Cours\ \:\ INF1120-30\n\ @version\ 22\ fev\ 2018\n
 comment1.params=args
 comment1.target=void\ main(java.lang.String[])
 numComments=2

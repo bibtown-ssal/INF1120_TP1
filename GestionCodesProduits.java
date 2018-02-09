@@ -5,14 +5,17 @@
  * partir de son code.
  *
  * @author Charles Therien
- * @codePermanent THEC03029208
+ * Code Permanent THEC03029208
+ * Courriel : therien.charles@courrier.uqam.ca
+ * Cours : INF1120-30
  * @version 22 fev 2018
  */
 public class GestionCodesProduits
 {
     //initialisation constante
     public static final String MESS_PRESENTATION =
-            "Ce programme permet de creer des codes de produits electroniques\n"
+            "Ce programme permet de creer des codes de produits"
+            +" electroniques\n"
             +"et d'afficher l'information sur un produit selon son code.";
     public static final String MENU_PRINCIPAL = "____\nMENU\n____\n"
             +"1. Construire un code de produit\n"
@@ -70,7 +73,8 @@ public class GestionCodesProduits
     public static final String MESS_ERR_CODE_INVALIDE =
             "*** Ce code de produit est invalide ***";
     public static final String MESS_ERR_MENU_PRINCIPAL =
-            "Erreur ! Vous devez entrer 1, 2 (ou 3 pour quitter). Recommencez...";
+            "Erreur ! Vous devez entrer 1, 2 (ou 3 pour quitter)."
+            + " Recommencez...";
     public static final String MESS_ERR_MENU_CATEGORIE =
             "Erreur ! Entrez un numero entre 1 et 4. Recommencez...";    
     public static final String MESS_ERR_MENU_ORDINATEUR =
@@ -84,69 +88,89 @@ public class GestionCodesProduits
     public static void main(String [] args){
         //initialisation variables
         char choixMenuPrincipal;
-        int choixCategorie =0;
-        int choixProduit =0;
-        int numModele= 0;
-        String codeProduit;
+        int numCategorie;
+        int numProduit = 0;
+        int numModele;
+        int codeProduit;
         
         System.out.println(MESS_PRESENTATION);
         do{
             System.out.print(MENU_PRINCIPAL);
             choixMenuPrincipal = Clavier.lireCharLn();
-            while(!(choixMenuPrincipal == '1' || choixMenuPrincipal == '2' || choixMenuPrincipal == '3')){
+            //boucle de validation du choix d'option dans le menu principal
+            while(!(choixMenuPrincipal == '1' || choixMenuPrincipal == '2' 
+                    || choixMenuPrincipal == '3')){
                 System.out.println(MESS_ERR_MENU_PRINCIPAL);
                 System.out.print(MENU_PRINCIPAL);
                 choixMenuPrincipal = Clavier.lireCharLn();
             }
             if(choixMenuPrincipal == '1'){
                 System.out.print(MENU_CATEGORIE);
-                choixCategorie = Clavier.lireIntLn();
-                while(choixCategorie < 1 || choixCategorie > NB_CATEGORIE){
+                numCategorie = Clavier.lireIntLn();
+                //boucle de validation du choix de categorie
+                while(numCategorie < 1 || numCategorie > NB_CATEGORIE){
                     System.out.println(MESS_ERR_MENU_CATEGORIE);
                     System.out.print(MENU_CATEGORIE);
-                    choixCategorie = Clavier.lireIntLn();
+                    numCategorie = Clavier.lireIntLn();
                 }
-                if(choixCategorie == CATEGORIE_ORDINATEUR){
+                if(numCategorie == CATEGORIE_ORDINATEUR){
                     System.out.print(MENU_ORDINATEUR);
-                    choixProduit = Clavier.lireIntLn();
-                    while(choixProduit < 1 || choixProduit > NB_PRODUIT_ORDINATEUR){
+                    numProduit = Clavier.lireIntLn();
+                    //boucle de validation de selection du produit
+                    while(numProduit < 1 
+                            || numProduit > NB_PRODUIT_ORDINATEUR){
                     System.out.println(MESS_ERR_MENU_ORDINATEUR);
                     System.out.print(MENU_ORDINATEUR);
-                    choixProduit = Clavier.lireIntLn();
+                    numProduit = Clavier.lireIntLn();
                     }
                 }
-                if(choixCategorie == CATEGORIE_TELEVISEUR){
+                if(numCategorie == CATEGORIE_TELEVISEUR){
                     System.out.print(MENU_TELEVISEUR);
-                    choixProduit = Clavier.lireIntLn();
-                    while(choixProduit < 1 || choixProduit > NB_PRODUIT_TELEVISEUR){
+                    numProduit = Clavier.lireIntLn();
+                    //boucle de validation de selection du produit
+                    while(numProduit < 1 
+                            || numProduit > NB_PRODUIT_TELEVISEUR){
                         System.out.println(MESS_ERR_MENU_TELEVISEUR);
                         System.out.print(MENU_TELEVISEUR);
-                        choixProduit = Clavier.lireIntLn();
+                        numProduit = Clavier.lireIntLn();
                     }
                 }
-                if(choixCategorie == CATEGORIE_APPAREIL_PHOTO){
-                    choixProduit = 1;
+                if(numCategorie == CATEGORIE_APPAREIL_PHOTO){
+                    //categorie n'ayant qu'une possibilite de produit
+                    numProduit = 1;
                 }
-                if(choixCategorie == CATEGORIE_PETIT_ELECTRO){
+                if(numCategorie == CATEGORIE_PETIT_ELECTRO){
                     System.out.print(MENU_PETIT_ELECTRO);
-                    choixProduit = Clavier.lireIntLn();
-                    while(choixProduit < 1 || choixProduit > NB_PRODUIT_PETIT_ELECTRO){
+                    numProduit = Clavier.lireIntLn();
+                    //boucle de validation de selection du produit
+                    while(numProduit < 1 
+                            || numProduit > NB_PRODUIT_PETIT_ELECTRO){
                         System.out.println(MESS_ERR_MENU_PETIT_ELECTRO);
                         System.out.print(MENU_PETIT_ELECTRO);
-                        choixProduit = Clavier.lireIntLn();
+                        numProduit = Clavier.lireIntLn();
                     }
                 }
                 System.out.print(MENU_MODELE);
                 numModele = Clavier.lireIntLn();
-                while(numModele < NUM_MODELE_MIN || numModele > NUM_MODELE_MAX){
+                //boucle de validation du numero de modele
+                while(numModele < NUM_MODELE_MIN 
+                        || numModele > NUM_MODELE_MAX){
                     System.out.println(MESS_ERR_MODELE_INVALIDE);
                     System.out.print(MENU_MODELE);
                     numModele = Clavier.lireIntLn();
                 } 
-                System.out.println(AFFICHAGE_CODE_PRODUIT + choixCategorie + choixProduit + numModele);
+                //la composition du code de produit se fait lors de l'affichage
+                System.out.println(AFFICHAGE_CODE_PRODUIT + numCategorie 
+                        + numProduit + numModele);
                 System.out.print(MESS_CONTINUER);
                 Clavier.lireFinLigne();
+            } else if (choixMenuPrincipal == 2){
+                System.out.print(MESS_SOLLI_CODE);
+                codeProduit = Clavier.lireIntLn();
+                
+                
             }
+            
         }while(choixMenuPrincipal != '3');
     }
 }
