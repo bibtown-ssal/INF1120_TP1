@@ -21,7 +21,7 @@ public class GestionCodesProduits
             +"1. Construire un code de produit\n"
             +"2. Afficher les informations sur un produit\n"
             +"3. Quitter\n"
-            +"\n Entrez votre choix (1,2 ou 3) :";
+            +"\nEntrez votre choix (1,2 ou 3) :";
     public static final String MENU_CATEGORIE = "\nCATEGORIES :\n"
             +"\t1. Ordinateurs\n"
             +"\t2. Televiseurs\n"
@@ -50,7 +50,7 @@ public class GestionCodesProduits
     public static final String MENU_MODELE = 
                     "\nEntrez le numero du modele :";
     public static final String AFFICHAGE_CODE_PRODUIT =
-             "\n CODE DU PRODUIT : ";
+             "\nCODE DU PRODUIT : ";
     public static final String MESS_CONTINUER = 
             "\nAppuyez sur <ENTREE> pour revenir au menu...";
     public static final String MESS_SOLLI_CODE =
@@ -175,7 +175,7 @@ public class GestionCodesProduits
                 System.out.print(MESS_SOLLI_CODE);
                 codeProduit = Clavier.lireIntLn();
                 //1: on verifie que le code est de longueur acceptee
-                if(codeProduit >= NUM_CODE_MIN || codeProduit <= NUM_CODE_MAX){
+                if(codeProduit >= NUM_CODE_MIN && codeProduit <= NUM_CODE_MAX){
                      /*Calcul le premier chiffre:
                      *  trouvle le log_10 du code, le tranforme en int
                      *      ce int est le nombre de chiffre -1
@@ -185,7 +185,7 @@ public class GestionCodesProduits
                     nbChiffre = (int)Math.log10(codeProduit);
                     numCategorie  = codeProduit/(int)(Math.pow(10,nbChiffre));
                     //validation que la Categorie est possible
-                    if(numCategorie < 1 || numCategorie > NB_CATEGORIE){
+                    if(numCategorie >= 1 && numCategorie <= NB_CATEGORIE){
                         //retire le numero de categorie du code
                         codeProduit = codeProduit % (int)Math.pow(10,nbChiffre);
                         //isole le numero de produit
@@ -195,7 +195,6 @@ public class GestionCodesProduits
                         if(numCategorie == CATEGORIE_ORDINATEUR){
                             descrProduit += CATEGORIE + "Ordinateurs"
                                     + PRODUIT;
-                            
                             switch(numProduit){
                                 case(1): descrProduit += "Ordinateur de bureau";
                                     break;
@@ -209,8 +208,7 @@ public class GestionCodesProduits
                                     break;
                                 default: codeValide = false;
                             }
-                        }
-                        if(numCategorie == CATEGORIE_TELEVISEUR){
+                        } else if(numCategorie == CATEGORIE_TELEVISEUR){
                             descrProduit += CATEGORIE + "Televiseurs"
                                     + PRODUIT;
                             switch(numProduit){
@@ -220,8 +218,7 @@ public class GestionCodesProduits
                                     break;
                                 default: codeValide = false;
                             }
-                        }
-                        if(numCategorie == CATEGORIE_APPAREIL_PHOTO){
+                        }else if(numCategorie == CATEGORIE_APPAREIL_PHOTO){
                             descrProduit += CATEGORIE + "Appareil Photos"
                                     + PRODUIT;
                             if(numProduit == 1){
@@ -229,8 +226,7 @@ public class GestionCodesProduits
                             } else {
                                 codeValide = false;
                             }
-                        }
-                        if(numCategorie == CATEGORIE_PETIT_ELECTRO){
+                        }else if(numCategorie == CATEGORIE_PETIT_ELECTRO){
                             descrProduit += CATEGORIE + "Petit Electros"
                                     + PRODUIT;
                             switch(numProduit){
@@ -249,11 +245,14 @@ public class GestionCodesProduits
                                 default: codeValide = false;
                             }
                         }
+                        
                         if(codeValide){
                             descrProduit += MODELE + codeProduit;
                             System.out.println(descrProduit);
                             System.out.println(AFFICHAGE_CODE_PRODUIT + numCategorie 
-                        + numProduit + codeProduit);
+                                    + numProduit + codeProduit);
+                            System.out.print(MESS_CONTINUER);
+                            Clavier.lireFinLigne();
                         }else {
                             System.out.println(MESS_ERR_CODE_INVALIDE + 1);
                             System.out.print(MESS_CONTINUER);
@@ -270,10 +269,10 @@ public class GestionCodesProduits
                     System.out.print(MESS_CONTINUER);
                     Clavier.lireFinLigne();
                 }
-                
-                
+                descrProduit = "";
             }
             
         }while(choixMenuPrincipal != '3');
+        System.out.print(MESS_FIN);
     }
 }
