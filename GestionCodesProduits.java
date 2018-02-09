@@ -67,8 +67,12 @@ public class GestionCodesProduits
     public static final int CATEGORIE_PETIT_ELECTRO = 4;
     public static final int NUM_MODELE_MIN = 1000;
     public static final int NUM_MODELE_MAX = 9999999;
+    public static final int NUM_CODE_MAX = 469999999;
+    public static final int NUM_CODE_MIN = 111000;
     
-    
+    public static final String CATEGORIE = "\nCATEGORIE : ";
+    public static final String PRODUIT =   "\nPRODUIT   : ";
+    public static final String MODELE =    "\nMODELE    : ";
     public static final String MESS_FIN = "\nFin normale du programme...";
     public static final String MESS_ERR_CODE_INVALIDE =
             "*** Ce code de produit est invalide ***";
@@ -92,7 +96,10 @@ public class GestionCodesProduits
         int numProduit = 0;
         int numModele;
         int codeProduit;
+        int nbChiffre;
+        boolean codeValide = true;
         
+        String descrProduit = "";
         System.out.println(MESS_PRESENTATION);
         do{
             System.out.print(MENU_PRINCIPAL);
@@ -164,9 +171,105 @@ public class GestionCodesProduits
                         + numProduit + numModele);
                 System.out.print(MESS_CONTINUER);
                 Clavier.lireFinLigne();
-            } else if (choixMenuPrincipal == 2){
+            } else if (choixMenuPrincipal == '2'){
                 System.out.print(MESS_SOLLI_CODE);
                 codeProduit = Clavier.lireIntLn();
+                //1: on verifie que le code est de longueur acceptee
+                if(codeProduit >= NUM_CODE_MIN || codeProduit <= NUM_CODE_MAX){
+                     /*Calcul le premier chiffre:
+                     *  trouvle le log_10 du code, le tranforme en int
+                     *      ce int est le nombre de chiffre -1
+                     *  on divise le code par 10 exposant le ce int
+                     *  cela retire tous les chiffre après le premier
+                     */
+                    nbChiffre = (int)Math.log10(codeProduit);
+                    numCategorie  = codeProduit/(int)(Math.pow(10,nbChiffre));
+                    //validation que la Categorie est possible
+                    if(numCategorie < 1 || numCategorie > NB_CATEGORIE){
+                        //retire le numero de categorie du code
+                        codeProduit = codeProduit % (int)Math.pow(10,nbChiffre);
+                        //isole le numero de produit
+                        numProduit = codeProduit/(int)(Math.pow(10,nbChiffre-1));
+                        //retire le numero de produit du code
+                        codeProduit = codeProduit % (int)Math.pow(10,nbChiffre-1);
+                        if(numCategorie == CATEGORIE_ORDINATEUR){
+                            descrProduit += CATEGORIE + "Ordinateurs"
+                                    + PRODUIT;
+                            
+                            switch(numProduit){
+                                case(1): descrProduit += "Ordinateur de bureau";
+                                    break;
+                                case(2): descrProduit += "Portable";
+                                    break;
+                                case(3): descrProduit += "Tablette";
+                                    break;
+                                case(4): descrProduit += "Moniteur";
+                                    break;
+                                case(5): descrProduit += "Imprimante / numeriseur";
+                                    break;
+                                default: codeValide = false;
+                            }
+                        }
+                        if(numCategorie == CATEGORIE_TELEVISEUR){
+                            descrProduit += CATEGORIE + "Televiseurs"
+                                    + PRODUIT;
+                            switch(numProduit){
+                                case(1): descrProduit += "Televiseur de bureau";
+                                    break;
+                                case(2): descrProduit += "Projecteur";
+                                    break;
+                                default: codeValide = false;
+                            }
+                        }
+                        if(numCategorie == CATEGORIE_APPAREIL_PHOTO){
+                            descrProduit += CATEGORIE + "Appareil Photos"
+                                    + PRODUIT;
+                            if(numProduit == 1){
+                                descrProduit += "Appareil photo numerique";
+                            } else {
+                                codeValide = false;
+                            }
+                        }
+                        if(numCategorie == CATEGORIE_PETIT_ELECTRO){
+                            descrProduit += CATEGORIE + "Petit Electros"
+                                    + PRODUIT;
+                            switch(numProduit){
+                                case(1): descrProduit += "Cafetiere";
+                                    break;
+                                case(2): descrProduit += "Robot culinaire";
+                                    break;
+                                case(3): descrProduit += "Melangeur";
+                                    break;
+                                case(4): descrProduit += "Batteur";
+                                    break;
+                                case(5): descrProduit += "Firteuse / grill";
+                                    break;
+                                case(6): descrProduit += "Grille-pain / four grille-pain";
+                                    break;
+                                default: codeValide = false;
+                            }
+                        }
+                        if(codeValide){
+                            descrProduit += MODELE + codeProduit;
+                            System.out.println(descrProduit);
+                            System.out.println(AFFICHAGE_CODE_PRODUIT + numCategorie 
+                        + numProduit + codeProduit);
+                        }else {
+                            System.out.println(MESS_ERR_CODE_INVALIDE + 1);
+                            System.out.print(MESS_CONTINUER);
+                            Clavier.lireFinLigne();
+                        }
+                    }else{
+                        System.out.println(MESS_ERR_CODE_INVALIDE + 2);
+                        System.out.print(MESS_CONTINUER);
+                        Clavier.lireFinLigne();
+                    }
+
+                }else {
+                    System.out.println(MESS_ERR_CODE_INVALIDE + 3);
+                    System.out.print(MESS_CONTINUER);
+                    Clavier.lireFinLigne();
+                }
                 
                 
             }
