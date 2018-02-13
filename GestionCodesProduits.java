@@ -48,9 +48,9 @@ public class GestionCodesProduits
             +"    6. Grille-pain/four grille-pain\n"
             +"\nEntrez le numero du produit : ";
     public static final String MENU_MODELE = 
-                    "\nEntrez le numero du modele : ";
+            "\nEntrez le numero du modele : ";
     public static final String AFFICHAGE_CODE_PRODUIT =
-             "\nCODE DU PRODUIT : ";
+            "\nCODE DU PRODUIT : ";
     public static final String MESS_CONTINUER = 
             "\nAppuyez sur <ENTREE> pour revenir au menu...";
     public static final String MESS_SOLLI_CODE =
@@ -73,7 +73,7 @@ public class GestionCodesProduits
     public static final String CATEGORIE = "\nCATEGORIE : ";
     public static final String PRODUIT =   "\nPRODUIT   : ";
     public static final String MODELE =    "\nMODELE    : ";
-    public static final String MESS_FIN = "\nFin normale du programme...";
+    public static final String MESS_FIN = "\nFIN NORMALE DU PROGRAMME";
     public static final String MESS_ERR_CODE_INVALIDE =
             "\n*** Ce code de produit est invalide ***";
     public static final String MESS_ERR_MENU_PRINCIPAL =
@@ -98,6 +98,7 @@ public class GestionCodesProduits
         int numModele;
         int codeProduit;
         int nbChiffre;
+        int diviseur;
         boolean codeValide = true;
         String descrProduit = "";
         
@@ -177,22 +178,31 @@ public class GestionCodesProduits
                 codeProduit = Clavier.lireIntLn();
                 //1: on verifie que le code est de longueur acceptee
                 if(codeProduit >= NUM_CODE_MIN && codeProduit <= NUM_CODE_MAX){
-                     /*Calcul le premier chiffre:
-                     *  trouvle le log_10 du code, le tranforme en int
-                     *      ce int est le nombre de chiffre -1
-                     *  on divise le code par 10 exposant le ce int
-                     *  cela retire tous les chiffre après le premier
-                     */
-                    nbChiffre = (int)Math.log10(codeProduit);
-                    numCategorie  = codeProduit/(int)(Math.pow(10,nbChiffre));
+
+                    //lecture du numCategorie (premier chiffre du nombre)
+                    numCategorie = codeProduit;
+                    nbChiffre = 0;
+                    do{
+                        numCategorie /= 10;
+                        nbChiffre++;
+                    }while(numCategorie > 10);
+
+                    //retire le premier chiffre du code
+                    diviseur = 1;
+                    for(int i = 0; i < nbChiffre; i++){
+                        diviseur *= 10;
+                    }
+                    codeProduit %= diviseur;
+
                     //validation que la Categorie est possible
                     if(numCategorie >= 1 && numCategorie <= NB_CATEGORIE){
-                        //retire le numero de categorie du code
-                        codeProduit = codeProduit%(int)Math.pow(10,nbChiffre);
                         //isole le numero de produit
-                        numProduit=codeProduit/(int)(Math.pow(10,nbChiffre-1));
+                        numProduit = codeProduit;
+                        numProduit /= (diviseur/10);
+                        
                         //retire le numero de produit du code
-                        codeProduit=codeProduit%(int)Math.pow(10,nbChiffre-1);
+                        codeProduit %= (diviseur/10);
+
                         if(numCategorie == CATEGORIE_ORDINATEUR){
                             descrProduit += CATEGORIE + "Ordinateurs"
                                     + PRODUIT;
