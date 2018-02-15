@@ -17,7 +17,7 @@ public class GestionCodesProduits
             "Ce programme permet de creer des codes de produits"
             +" electroniques\n"
             +"et d'afficher l'information sur un produit selon son code.\n";
-    public static final String MENU_PRINCIPAL = "----\nMENU\n----\n"
+    public static final String MENU_PRINCIPAL = "\n----\nMENU\n----\n"
             +"1. Construire un code de produit\n"
             +"2. Afficher les informations sur un produit\n"
             +"3. Quitter\n"
@@ -55,16 +55,44 @@ public class GestionCodesProduits
             "\nAppuyez sur <ENTREE> pour revenir au menu...";
     public static final String MESS_SOLLI_CODE =
             "Entrez le code du produit : ";
+    public static final String TEXT_CAT_ORDI = "Ordinateurs";        
+    public static final String TEXT_CAT_ORDI_PROD1 = 
+            "Ordinateur de bureau";
+    public static final String TEXT_CAT_ORDI_PROD2 = "Portable";
+    public static final String TEXT_CAT_ORDI_PROD3 = "Tablette";
+    public static final String TEXT_CAT_ORDI_PROD4 = "Moniteur";
+    public static final String TEXT_CAT_ORDI_PROD5 = 
+            "Imprimante / Numerisateur";
+    public static final String TEXT_CAT_TELE = "Televiseurs";
+    public static final String TEXT_CAT_TELE_PROD1 = "Televiseur";
+    public static final String TEXT_CAT_TELE_PROD2 = "Projecteur";
+    public static final String TEXT_CAT_APPAREIL_PHOTO = "Appareils photo";
+    public static final String TEXT_CAT_APPAREIL_PHOTO_PROD1 = 
+            "Appareil photo numerique";
+    public static final String TEXT_CAT_PETIT_ELECTRO = 
+            "Petits electros";
+    public static final String TEXT_CAT_PETIT_ELECTRO_PROD1 = 
+            "Cafetiere";
+    public static final String TEXT_CAT_PETIT_ELECTRO_PROD2 = 
+            "Robot culinaire";
+    public static final String TEXT_CAT_PETIT_ELECTRO_PROD3 = 
+            "Melangeur";
+    public static final String TEXT_CAT_PETIT_ELECTRO_PROD4 = 
+            "Batteur";
+    public static final String TEXT_CAT_PETIT_ELECTRO_PROD5 = 
+            "Fritteuse / grill";
+    public static final String TEXT_CAT_PETIT_ELECTRO_PROD6 = 
+            "Grille-pain / four grille-pain";
     public static final int NB_CATEGORIE = 4;
     public static final int NB_PRODUIT_ORDINATEUR = 5;
     public static final int NB_PRODUIT_TELEVISEUR = 2;
     public static final int NB_PRODUIT_PETIT_ELECTRO = 6;
     public static final int MODELE_LONGUEUR_MIN = 4;
     public static final int MODELE_LONGUEUR_MAX = 7;
-    public static final int CATEGORIE_ORDINATEUR = 1;
-    public static final int CATEGORIE_TELEVISEUR= 2;
-    public static final int CATEGORIE_APPAREIL_PHOTO = 3;
-    public static final int CATEGORIE_PETIT_ELECTRO = 4;
+    public static final int NUM_CATEGORIE_ORDINATEUR = 1;
+    public static final int NUM_CATEGORIE_TELEVISEUR= 2;
+    public static final int NUM_CATEGORIE_APPAREIL_PHOTO = 3;
+    public static final int NUM_CATEGORIE_PETIT_ELECTRO = 4;
     public static final int NUM_MODELE_MIN = 1000;
     public static final int NUM_MODELE_MAX = 9999999;
     public static final int NUM_CODE_MAX = 469999999;
@@ -122,7 +150,7 @@ public class GestionCodesProduits
                     System.out.print(MENU_CATEGORIE);
                     numCategorie = Clavier.lireIntLn();
                 }
-                if(numCategorie == CATEGORIE_ORDINATEUR){
+                if(numCategorie == NUM_CATEGORIE_ORDINATEUR){
                     System.out.print(MENU_ORDINATEUR);
                     numProduit = Clavier.lireIntLn();
                     //boucle de validation de selection du produit
@@ -133,7 +161,7 @@ public class GestionCodesProduits
                     numProduit = Clavier.lireIntLn();
                     }
                 }
-                if(numCategorie == CATEGORIE_TELEVISEUR){
+                if(numCategorie == NUM_CATEGORIE_TELEVISEUR){
                     System.out.print(MENU_TELEVISEUR);
                     numProduit = Clavier.lireIntLn();
                     //boucle de validation de selection du produit
@@ -144,11 +172,11 @@ public class GestionCodesProduits
                         numProduit = Clavier.lireIntLn();
                     }
                 }
-                if(numCategorie == CATEGORIE_APPAREIL_PHOTO){
+                if(numCategorie == NUM_CATEGORIE_APPAREIL_PHOTO){
                     //categorie n'ayant qu'une possibilite de produit
                     numProduit = 1;
                 }
-                if(numCategorie == CATEGORIE_PETIT_ELECTRO){
+                if(numCategorie == NUM_CATEGORIE_PETIT_ELECTRO){
                     System.out.print(MENU_PETIT_ELECTRO);
                     numProduit = Clavier.lireIntLn();
                     //boucle de validation de selection du produit
@@ -173,6 +201,7 @@ public class GestionCodesProduits
                         + numProduit + numModele);
                 System.out.print(MESS_CONTINUER);
                 Clavier.lireFinLigne();
+                
             } else if (choixMenuPrincipal == '2'){
                 System.out.print(MESS_SOLLI_CODE);
                 codeProduit = Clavier.lireIntLn();
@@ -187,7 +216,7 @@ public class GestionCodesProduits
                         nbChiffre++;
                     }while(numCategorie > 10);
 
-                    //retire le premier chiffre du code
+                    //retire le premier chiffre du code de produit
                     diviseur = 1;
                     for(int i = 0; i < nbChiffre; i++){
                         diviseur *= 10;
@@ -203,57 +232,61 @@ public class GestionCodesProduits
                         //retire le numero de produit du code
                         codeProduit %= (diviseur/10);
 
-                        if(numCategorie == CATEGORIE_ORDINATEUR){
-                            descrProduit += CATEGORIE + "Ordinateurs"
+                        if(numCategorie == NUM_CATEGORIE_ORDINATEUR){
+                            descrProduit += CATEGORIE + TEXT_CAT_ORDI
                                     + PRODUIT;
                             switch(numProduit){ //selection du bon produit
-                                case(1): descrProduit += "Ordinateur de bureau";
+                                case(1): descrProduit += TEXT_CAT_ORDI_PROD1;
                                     break;
-                                case(2): descrProduit += "Portable";
+                                case(2): descrProduit += TEXT_CAT_ORDI_PROD2;
                                     break;
-                                case(3): descrProduit += "Tablette";
+                                case(3): descrProduit += TEXT_CAT_ORDI_PROD3;
                                     break;
-                                case(4): descrProduit += "Moniteur";
+                                case(4): descrProduit += TEXT_CAT_ORDI_PROD4;
                                     break;
-                                case(5): descrProduit 
-                                        += "Imprimante / numeriseur";
+                                case(5): descrProduit += TEXT_CAT_ORDI_PROD5;
                                     break;
                                 default: codeValide = false;
                             }
-                        } else if(numCategorie == CATEGORIE_TELEVISEUR){
-                            descrProduit += CATEGORIE + "Televiseurs"
+                        } else if(numCategorie == NUM_CATEGORIE_TELEVISEUR){
+                            descrProduit += CATEGORIE + TEXT_CAT_TELE
                                     + PRODUIT;
                             switch(numProduit){
-                                case(1): descrProduit += "Televiseur";
+                                case(1): descrProduit += TEXT_CAT_TELE_PROD1;
                                     break;
-                                case(2): descrProduit += "Projecteur";
+                                case(2): descrProduit += TEXT_CAT_TELE_PROD2;
                                     break;
                                 default: codeValide = false;
                             }
-                        }else if(numCategorie == CATEGORIE_APPAREIL_PHOTO){
-                            descrProduit += CATEGORIE + "Appareil Photos"
+                        }else if(numCategorie == NUM_CATEGORIE_APPAREIL_PHOTO){
+                            descrProduit += CATEGORIE + TEXT_CAT_APPAREIL_PHOTO
                                     + PRODUIT;
                             if(numProduit == 1){
-                                descrProduit += "Appareil photo numerique";
+                                descrProduit += TEXT_CAT_APPAREIL_PHOTO_PROD1;
                             } else {
                                 codeValide = false;
                             }
-                        }else if(numCategorie == CATEGORIE_PETIT_ELECTRO){
-                            descrProduit += CATEGORIE + "Petit Electros"
+                        }else if(numCategorie == NUM_CATEGORIE_PETIT_ELECTRO){
+                            descrProduit += CATEGORIE + TEXT_CAT_PETIT_ELECTRO
                                     + PRODUIT;
                             switch(numProduit){
-                                case(1): descrProduit += "Cafetiere";
+                                case(1): descrProduit 
+                                        += TEXT_CAT_PETIT_ELECTRO_PROD1;
                                     break;
-                                case(2): descrProduit += "Robot culinaire";
+                                case(2): descrProduit 
+                                        += TEXT_CAT_PETIT_ELECTRO_PROD2;
                                     break;
-                                case(3): descrProduit += "Melangeur";
+                                case(3): descrProduit 
+                                        += TEXT_CAT_PETIT_ELECTRO_PROD3;
                                     break;
-                                case(4): descrProduit += "Batteur";
+                                case(4): descrProduit 
+                                        += TEXT_CAT_PETIT_ELECTRO_PROD4;
                                     break;
-                                case(5): descrProduit += "Firteuse / grill";
+                                case(5): descrProduit 
+                                        += TEXT_CAT_PETIT_ELECTRO_PROD5;
                                     break;
                                 case(6): descrProduit 
-                                        += "Grille-pain / four grille-pain";
+                                        += TEXT_CAT_PETIT_ELECTRO_PROD6;
                                     break;
                                 default: codeValide = false;
                             }
@@ -266,8 +299,6 @@ public class GestionCodesProduits
                         if(codeValide){ 
                             descrProduit += MODELE + codeProduit;
                             System.out.println(descrProduit);
-                            System.out.println(AFFICHAGE_CODE_PRODUIT 
-                                    + numCategorie + numProduit + codeProduit);
                             System.out.print(MESS_CONTINUER);
                             Clavier.lireFinLigne();
                         }else { //code non valide (produit)
@@ -281,7 +312,8 @@ public class GestionCodesProduits
                         Clavier.lireFinLigne();
                     }
 
-                }else { //code non valide (code n'est pas dans le limites possibles)
+                }else { 
+                //code non valide (code n'est pas dans les limites possibles)
                     System.out.println(MESS_ERR_CODE_INVALIDE);
                     System.out.print(MESS_CONTINUER);
                     Clavier.lireFinLigne();
